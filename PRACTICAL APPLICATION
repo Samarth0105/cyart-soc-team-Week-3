@@ -1,0 +1,85 @@
+1️ Advanced Log Analysis
+ Log Correlation Table
+Timestamp	Event ID	Source IP	Destination IP	Notes
+2025-08-18 12:00	4625	192.168.1.100	8.8.8.8	Suspicious DNS
+
+ Anomaly Detection Rule (Elastic)
+
+Rule Logic:
+
+bytes_out > 1MB within 1 minute
+
+Result:
+Mock file transfer triggered anomaly alert indicating potential data exfiltration.
+
+ Log Enrichment Summary (50 words)
+
+GeoIP enrichment revealed outbound traffic originated from a high-risk foreign region. Enrichment provided location, ISP, and country details, helping differentiate legitimate internal traffic from suspicious external communication. This additional context reduced investigation time and improved confidence in alert prioritization.
+
+2️ Threat Intelligence Integration
+ Threat Feed Import
+
+AlienVault OTX feed imported into Wazuh to match malicious IP indicators.
+
+ Alert Enrichment Table
+Alert ID	IP	Reputation	Notes
+003	192.168.1.100	Malicious	Linked to C2
+ Threat Hunting Summary
+
+A hunt for T1078 – Valid Accounts revealed multiple logins using non-system accounts during abnormal hours. Correlated authentication logs confirmed potential credential misuse. Findings were escalated for deeper investigation and password reset actions.
+
+3️ Incident Escalation Practice
+ Tier-2 Escalation Summary 
+
+A High-priority unauthorized access alert was detected on Server-Y. Authentication logs indicate suspicious access using valid credentials from IP 192.168.1.200, mapped to MITRE T1078. The affected server was immediately isolated to prevent lateral movement. Initial evidence suggests credential compromise rather than brute-force activity. Relevant logs, IP reputation data, and authentication records have been attached. Escalating to Tier-2 for advanced investigation, credential analysis, and further containment guidance.
+
+ SITREP
+
+Title: Unauthorized Access on Server-Y
+Summary: Detected at 2025-08-18 13:00
+IP: 192.168.1.200
+MITRE: T1078
+Actions: Isolated system, escalated to Tier-2
+
+🔹 Automation (Splunk Phantom)
+
+Playbook auto-assigns High priority alerts → Tier-2 analyst.
+
+4️ Alert Triage with Threat Intelligence
+ Triage Table
+Alert ID	Description	Source IP	Priority	Status
+004	PowerShell Execution	192.168.1.101	High	Open
+
+IOC Validation Summary 
+
+VirusTotal and AlienVault OTX confirmed the PowerShell hash was associated with known post-exploitation frameworks. The IP had multiple detections across threat feeds. This validated the alert as true positive, justifying High priority escalation and immediate containment.
+
+5️ Evidence Preservation
+ Chain of Custody
+Item	Description	Collected By	Date	Hash
+Memory Dump	Server-Y Dump	SOC Analyst	2025-08-18	SHA256
+
+
+6️ CAPSTONE PROJECT – FULL SOC WORKFLOW
+ Detection & Triage
+Time	Source IP	Alert	MITRE
+14:00	192.168.1.101	Samba exploit	T1210
+ Response
+
+VM isolated
+
+IP blocked using CrowdSec
+
+Connectivity verified via ping failure
+
+ Tier-2 Escalation 
+
+A Samba usermap script exploit was detected against Metasploitable2 from IP 192.168.1.101. Wazuh generated a high-confidence alert mapped to MITRE T1210. The affected VM was immediately isolated and the attacker IP blocked via CrowdSec. No lateral movement was observed. Evidence including logs and memory artifacts has been preserved. Escalating to Tier-2 for advanced analysis, root cause validation, and remediation recommendations.
+
+ Executive Report
+
+A simulated Samba exploitation attack was conducted using Metasploit against a vulnerable system. Detection was successfully performed by Wazuh, triggering a high-priority alert. Correlation and threat intelligence enrichment confirmed malicious intent. The SOC team executed containment by isolating the compromised system and blocking the attacker’s IP using CrowdSec. Evidence was collected following proper chain-of-custody procedures. No business impact or data exfiltration was detected. Recommendations include patching vulnerable services, continuous monitoring, credential hardening, and regular SOC simulations to maintain preparedness.
+
+🔹 Manager Briefing 
+
+A simulated cyberattack was detected and contained without business impact. Our security systems identified suspicious activity early, and the affected server was isolated immediately. The attacker’s access was blocked, and no sensitive data was compromised. This exercise confirms the effectiveness of our detection, response, and escalation processes. Continued monitoring, system patching, and regular incident response drills are recommended to maintain a strong security posture.
