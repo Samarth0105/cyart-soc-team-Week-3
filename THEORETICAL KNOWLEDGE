@@ -1,0 +1,129 @@
+
+1️ Advanced Log Analysis
+Core Concepts
+Log Correlation
+
+Log correlation involves combining logs from multiple sources (firewall, endpoint, authentication, application) to identify attack patterns that are invisible in isolated logs.
+
+Example:
+
+Windows failed login → Event ID 4625
+
+Followed by suspicious outbound DNS traffic
+
+Indicates potential credential compromise or brute-force attempt
+
+Anomaly Detection
+
+Anomaly detection identifies deviations from normal behavior such as:
+
+Logins at unusual hours
+
+Sudden spikes in outbound traffic
+
+Large data transfers from user endpoints
+
+Methods include:
+
+Rule-based thresholds
+
+Statistical baselines
+
+Behavioral profiling
+
+Log Enrichment
+
+Log enrichment adds context to raw logs:
+
+Geo-location of IP addresses
+
+User roles (admin vs user)
+
+Asset criticality
+
+This improves detection accuracy and reduces false positives.
+
+Key Objective
+
+Correlate, enrich, and analyze logs to uncover complex threats and minimize alert fatigue.
+
+Learning References
+
+SANS Institute – Log analysis papers
+
+Elastic – Anomaly detection docs
+
+CISA – Real breach analysis (Equifax)
+
+2️ Threat Intelligence Integration
+Core Concepts
+ Threat Intelligence Types
+
+IOCs: IPs, hashes, domains
+
+TTPs: Attacker behavior patterns
+
+Threat Feeds: STIX/TAXII formatted feeds
+
+ SOC Integration
+
+Threat intelligence enhances SIEM alerts by:
+
+Matching IPs to known C2 servers
+
+Enriching alerts with reputation data
+
+Automating threat scoring
+
+ Threat Hunting
+
+Proactive searching for attacker behavior using intelligence:
+
+Example: Hunting T1078 – Valid Accounts misuse
+
+ Key Objective
+
+Leverage intelligence to improve detection, response, and proactive hunting.
+
+ Learning References
+
+MITRE ATT&CK
+
+OASIS – STIX/TAXII
+
+AlienVault OTX
+
+3️ Incident Escalation Workflows
+Core Concepts
+ SOC Escalation Tiers
+Tier	Responsibility
+Tier 1	Alert triage
+Tier 2	Investigation
+Tier 3	Advanced analysis & forensics
+ Communication
+
+SITREP (Situation Reports)
+
+Management briefings
+
+Evidence-based summaries
+
+ Automation
+
+SOAR tools automate:
+
+Ticket creation
+
+Alert assignment
+
+Context enrichment
+
+ Key Objective
+
+Ensure fast, structured escalation with clear communication.
+
+ Learning References
+
+NIST SP 800-61
+
+Splunk SOAR Docs
